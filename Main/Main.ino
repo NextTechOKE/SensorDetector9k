@@ -13,7 +13,9 @@
 #define SCREEN_ADDRESS 0xBC
 #define SEALEVELPRESSURE_HPA (1013.25)
 #define BUZZER_PIN 7  // Buzzer pin
-#define LED_PIN_1 8
+#define LED_PIN_1 51
+#define LED_PIN_2 53
+#define LED_PIN_3 49
 
 Adafruit_BME280 bme; // Create BME280 object
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
@@ -35,6 +37,8 @@ void setup() {
  rtc.begin();
  pinMode(BUZZER_PIN, OUTPUT);
  pinMode(LED_PIN_1, OUTPUT);
+ pinMode(LED_PIN_2, OUTPUT);
+ pinMode(LED_PIN_3, OUTPUT);
 
   Serial.begin(9600);
 
@@ -91,6 +95,8 @@ void loop() {
                 if (currentMillis - previousMillis >= interval) {
                     previousMillis = currentMillis;
                     digitalWrite(LED_PIN_1, !digitalRead(LED_PIN_1)); // Toggle LED state
+                    digitalWrite(LED_PIN_2, !digitalRead(LED_PIN_2)); // Toggle LED state
+                    digitalWrite(LED_PIN_3, !digitalRead(LED_PIN_3)); // Toggle LED state
                     isHighTone = !isHighTone; // Toggle between low and high tone
                     if (isHighTone) {
                         tone(BUZZER_PIN, highToneFrequency); // High tone
@@ -104,6 +110,8 @@ void loop() {
                     if (newInput == "testover") {
                         noTone(BUZZER_PIN); // Turn off the buzzer
                         digitalWrite(LED_PIN_1, LOW); // Turn off LED
+                        digitalWrite(LED_PIN_2, LOW); // Turn off LED
+                        digitalWrite(LED_PIN_3, LOW); // Turn off LED
                         break; // Break out of the loop
                     }
                 }

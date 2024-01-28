@@ -4,11 +4,13 @@
 #include <Adafruit_SSD1306.h>
 #include "Adafruit_SGP30.h"
 
+
 #define SCREEN_WIDTH 128
 #define SCREEN_HEIGHT 64
 #define OLED_RESET    -1  // Reset pin # 
 #define SCREEN_ADDRESS 0xBC
 #define SEALEVELPRESSURE_HPA (1013.25)
+
 
 Adafruit_BME280 bme; // Create BME280 object
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
@@ -53,6 +55,8 @@ void setup() {
   display.clearDisplay();
 }
 
+
+
 void loop() {
   display.clearDisplay();
 
@@ -80,7 +84,9 @@ if (! sgp.IAQmeasure()) {
     return;
   }
   display.setCursor(0, 30);
+  display.print("eCO2: ");
   display.print(sgp.eCO2);
+  display.print(" ppm");
 
 if (! sgp.IAQmeasure()) {
     Serial.println("Measurement failed");
@@ -89,7 +95,12 @@ if (! sgp.IAQmeasure()) {
   }
 
   display.setCursor(0, 40);
+  display.print("TVOC: ");
   display.print(sgp.TVOC);
+  display.print(" ppb\\t");
+
+
+
   display.setCursor(0, 50);
   display.print("test"); 
 
